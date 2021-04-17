@@ -8,6 +8,7 @@ class UsuarioTest : DescribeSpec({
     val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz")
     val fotoEnCuzco = Foto(768, 1024)
 
+
     describe("Una publicación") {
       describe("de tipo foto") {
         it("ocupa ancho * alto * compresion bytes") {

@@ -2,7 +2,7 @@ package ar.edu.unahur.obj2.caralibro
 
 import kotlin.math.ceil
 
-
+//Si lees esto es porque funciona el pull
 
 abstract class Publicacion
 {
@@ -31,7 +31,6 @@ class Video(val duracion:Int, var calidad:Calidad): Publicacion()
     override fun espacioQueOcupa(): Int = calidad.espacioQueOcupa(duracion)
 
 }
-
 abstract class Calidad {
     abstract fun espacioQueOcupa(duracion:Int):Int
 }
