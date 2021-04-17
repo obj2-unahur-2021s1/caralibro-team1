@@ -21,18 +21,16 @@ class UsuarioTest : DescribeSpec({
           saludoCumpleanios.espacioQueOcupa().shouldBe(45)
         }
       }
-        //Los videos tienen un tamaño que depende de la calidad con la cual el usuario elija publicarlo.
-        //Para la calidad SD, el tamaño es igual a la duración del video en segundos. Para los videos HD 720p
-        //el tamaño es igual al triple de la duración en segundos del video y para los videos de HD 1080p el tamaño
-        //es el doble de los HD 720p. Debe poder modificarse la calidad sin tener que volver a hacer la publicación.
-        describe("un video") {
-            it("ocupa tantos bytes como su longitud") {
-                val videoDeLaUniversidad= Video(3,HD720p)
-                videoDeLaUniversidad.espacioQueOcupa().shouldBe(45)
-                videoDeLaUniversidad.cambiarDeCalidad(HD1080p).espacioQueOcupa().shouldBe(55)
 
-            }
+      describe("un video") {
+        it("ocupa tantos bytes como su longitud") {
+          val videoDeLaUniversidad= Video(3,HD720p)
+          videoDeLaUniversidad.espacioQueOcupa().shouldBe(9)
+          videoDeLaUniversidad.calidad = HD1080p
+          videoDeLaUniversidad.espacioQueOcupa().shouldBe(18)
+
         }
+      }
     }
 
     describe("Un usuario") {
