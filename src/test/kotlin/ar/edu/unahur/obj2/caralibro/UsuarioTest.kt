@@ -65,8 +65,8 @@ class UsuarioTest : DescribeSpec({
           juana.esMasAmistoso(cristian).shouldBeFalse()
         }
       }
+
     }
   }
-
 })
 
