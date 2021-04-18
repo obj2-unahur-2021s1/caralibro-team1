@@ -7,6 +7,7 @@ class UsuarioTest : DescribeSpec({
   describe("Caralibro") {
     val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz")
     val fotoEnCuzco = Foto(768, 1024)
+    val juana = Usuario()
 
 
     describe("Una publicación") {
@@ -29,8 +30,15 @@ class UsuarioTest : DescribeSpec({
           videoDeLaUniversidad.espacioQueOcupa().shouldBe(9)
           videoDeLaUniversidad.calidad = HD1080p
           videoDeLaUniversidad.espacioQueOcupa().shouldBe(18)
-
         }
+      }
+
+      describe("me gusta") {
+        val cristian = Usuario()
+        juana.darMeGusta(saludoCumpleanios)
+        saludoCumpleanios.cantidadDeMeGusta().shouldBe(1)
+        cristian.darMeGusta(saludoCumpleanios)
+        saludoCumpleanios.cantidadDeMeGusta().shouldBe(2)
       }
     }
 
