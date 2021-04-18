@@ -2,18 +2,21 @@ package ar.edu.unahur.obj2.caralibro
 
 import kotlin.math.ceil
 
-//Si lees esto es porque funciona el pull
 
 abstract class Publicacion
 {
+
   abstract fun espacioQueOcupa(): Int
+  fun recibirMeGusta() = cantidadDeMeGusta = cantidadDeMeGusta + 1
+
+
 }
 
 
 class Foto(val alto: Int, val ancho: Int) : Publicacion()
 {
     var factorDeCompresion = 0.7
-  override fun espacioQueOcupa() = ceil(alto * ancho * factorDeCompresion).toInt()
+    override fun espacioQueOcupa() = ceil(alto * ancho * factorDeCompresion).toInt()
 
   fun cambiarFactorDeComprension(nuevoFactorDeCompresion:Double)
   {

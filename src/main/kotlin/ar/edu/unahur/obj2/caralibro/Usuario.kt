@@ -8,4 +8,6 @@ class Usuario {
   }
 
   fun espacioDePublicaciones() = publicaciones.sumBy { it.espacioQueOcupa() }
+
+  fun darMeGusta(publicacion: Publicacion) = publicacion.recibirMeGusta()
 }
