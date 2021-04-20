@@ -10,10 +10,13 @@ class UsuarioTest : DescribeSpec({
     val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz")
     val fotoEnCuzco = Foto(768, 1024)
     val juana = Usuario()
-    val videoDeLaUniversidad= Video(3,HD720p)
+    val videoDeLaUniversidad = Video(3, HD720p)
     val brenda = Usuario()
     val cristian = Usuario()
     val patricio = Usuario()
+    val fotoDeBebe = Foto(50, 60)
+    val videoGracioso = Video(80, SD)
+
 
     describe("Una publicación") {
       describe("de tipo foto") {
@@ -38,22 +41,23 @@ class UsuarioTest : DescribeSpec({
       }
     }
 
-    describe("Dar me gusta") {
-      juana.darMeGusta(saludoCumpleanios)
-      saludoCumpleanios.cantidadDeMeGusta().shouldBe(1)
-      cristian.darMeGusta(saludoCumpleanios)
-      saludoCumpleanios.cantidadDeMeGusta().shouldBe(2)
-
-    }
-
     describe("Un usuario") {
-      it("puede calcular el espacio que ocupan sus publicaciones") {
+      describe("puede calcular el espacio que ocupan sus publicaciones") {
         juana.agregarPublicacion(fotoEnCuzco)
         juana.agregarPublicacion(saludoCumpleanios)
         juana.espacioDePublicaciones().shouldBe(550548)
         juana.darMeGusta(fotoEnCuzco)
         brenda.darMeGusta(fotoEnCuzco)
       }
+
+      describe("puede dar me gusta") {
+        juana.darMeGusta(saludoCumpleanios)
+        saludoCumpleanios.cantidadDeMeGusta().shouldBe(1)
+        cristian.darMeGusta(saludoCumpleanios)
+        saludoCumpleanios.cantidadDeMeGusta().shouldBe(2)
+
+      }
+
       describe("es mas amistoso que otro") {
         it("tiene mas amigos") {
           juana.agregarAmigo(cristian)
@@ -66,7 +70,41 @@ class UsuarioTest : DescribeSpec({
         }
       }
 
+      describe("puede ver la publicacion") {
+        describe("publicacion publica") {
+          cristian.agregarPublicacion(fotoDeBebe)
+          cristian.cambiarPrivacidad(fotoDeBebe, Publico)
+          patricio.puedeVerLaPublicacion(fotoDeBebe).shouldBeTrue()
+          juana.puedeVerLaPublicacion(fotoDeBebe).shouldBeTrue()
+        }
+        describe("publicacion solo amigos") {
+          juana.agregarPublicacion(videoGracioso)
+          juana.agregarAmigo(brenda)
+          juana.cambiarPrivacidad(videoGracioso, SoloAmigos)
+          brenda.puedeVerLaPublicacion(videoGracioso).shouldBeTrue()
+          patricio.puedeVerLaPublicacion(videoGracioso).shouldBeFalse()
+        }
+        describe("solo lista de permitidos") {
+          juana.agregarAmigo(patricio)
+          juana.agregarAmigo(cristian)
+          juana.agregarAListaDePermitidos(patricio)
+          juana.agregarAListaDePermitidos(brenda)
+          juana.agregarPublicacion(videoGracioso)
+          juana.cambiarPrivacidad(videoGracioso, ListaDePermitidos)
+          cristian.puedeVerLaPublicacion(videoGracioso).shouldBeFalse()
+          brenda.puedeVerLaPublicacion(videoGracioso).shouldBeTrue()
+        }
+        describe("todos menos los exluidos") {
+          juana.agregarPublicacion(fotoDeBebe)
+          juana.cambiarPrivacidad(fotoDeBebe, ListaDeExcluidos)
+          juana.agregarAListaDeExcluidos(cristian)
+          juana.agregarAListaDeExcluidos(brenda)
+          brenda.puedeVerLaPublicacion(fotoDeBebe).shouldBeFalse()
+          patricio.puedeVerLaPublicacion(fotoDeBebe).shouldBeTrue()
+        }
+      }
     }
   }
 })
+
 
