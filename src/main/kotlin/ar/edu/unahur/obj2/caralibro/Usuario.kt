@@ -5,9 +5,18 @@ class Usuario {
 
   val amigos = mutableListOf<Usuario>()
 
+  val listaDePermitidos = mutableListOf<Usuario>()
+
+  val listaDeExcluidos = mutableListOf<Usuario>()
+
   val publicacionesQueMeGustan = mutableListOf<Publicacion>()
 
-  fun agregarPublicacion(publicacion: Publicacion) = publicaciones.add(publicacion)
+
+  fun agregarPublicacion(publicacion: Publicacion) {
+    publicaciones.add(publicacion)
+    publicacion.asignarAutor(this)
+  }
+
 
   fun darMeGusta(publicacion: Publicacion) {
     if(publicacionesQueMeGustan.contains(publicacion)) {
@@ -28,9 +37,29 @@ class Usuario {
     }
   }
 
+  fun agregarAListaDePermitidos(usuario: Usuario) {
+    if (listaDePermitidos.contains(usuario)) {
+      error("Ya está en lista de permitidos.")
+    }
+    else {
+      listaDePermitidos.add(usuario)
+    }
+  }
+
+  fun agregarAListaDeExcluidos(usuario: Usuario) {
+    if (listaDeExcluidos.contains(usuario)) {
+      error("Ya está en lista de excluidos.")
+    }
+    else {
+      listaDeExcluidos.add(usuario)
+    }
+  }
+
   fun esMasAmistoso(usuario: Usuario) = this.cantidadDeAmigos() > usuario.cantidadDeAmigos()
 
   fun cantidadDeAmigos() = amigos.size
 
+  fun puedeVerLaPublicacion(publicacion: Publicacion) = publicacion.puedeSerVista(this)
 
+  fun cambiarPrivacidad(publicacion: Publicacion, privacidad: Privacidad) = publicacion.cambiarPrivacidad(privacidad)
 }

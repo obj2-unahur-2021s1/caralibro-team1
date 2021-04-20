@@ -4,14 +4,30 @@ import kotlin.math.ceil
 
 
 abstract class Publicacion {
-  var cantidadDeMeGusta = 0
+    var cantidadDeMeGusta = 0
 
-  abstract fun espacioQueOcupa(): Int
+    var autor: Usuario? = null
 
-  fun recibirMeGusta() {
-      cantidadDeMeGusta += 1
-  }
-  fun cantidadDeMeGusta() = this.cantidadDeMeGusta
+    var privacidad: Privacidad? = null
+
+
+    abstract fun espacioQueOcupa(): Int
+
+    fun recibirMeGusta() {
+        cantidadDeMeGusta += 1
+    }
+
+    fun cantidadDeMeGusta() = this.cantidadDeMeGusta
+
+    fun puedeSerVista(usuario: Usuario) = privacidad!!.puedeVerPublicacion(this, usuario )
+
+    fun cambiarPrivacidad(nuevaPrivacidad: Privacidad) {
+        privacidad = nuevaPrivacidad
+    }
+
+    fun asignarAutor(autorAAsignar: Usuario) {
+        autor = autorAAsignar
+    }
 
 }
 
@@ -23,8 +39,7 @@ class Foto(val alto: Int, val ancho: Int) : Publicacion()
     override fun espacioQueOcupa() = ceil(alto * ancho * factorDeCompresion).toInt()
 
 
-    fun cambiarFactorDeComprension(nuevoFactorDeCompresion:Double)
-    {
+    fun cambiarFactorDeComprension(nuevoFactorDeCompresion:Double) {
       factorDeCompresion = nuevoFactorDeCompresion
     }
 }
@@ -59,4 +74,33 @@ object HD1080p: Calidad()
 object SD: Calidad()
 {
     override fun espacioQueOcupa(duracion: Int) = duracion
+}
+
+abstract class Privacidad {
+    abstract fun puedeVerPublicacion(publicacion: Publicacion, usuario: Usuario): Boolean
+}
+
+object Publico: Privacidad() {
+    override fun puedeVerPublicacion(publicacion: Publicacion, usuario: Usuario) = true
+}
+
+object SoloAmigos: Privacidad() {
+    override fun puedeVerPublicacion(publicacion: Publicacion, usuario: Usuario): Boolean {
+        val amigos = publicacion.autor!!.amigos
+        return amigos.contains(usuario)
+    }
+}
+
+object ListaDePermitidos: Privacidad() {
+    override fun puedeVerPublicacion(publicacion: Publicacion, usuario: Usuario): Boolean {
+        val permitidos = publicacion.autor!!.listaDePermitidos
+        return permitidos.contains(usuario)
+    }
+}
+
+object ListaDeExcluidos: Privacidad() {
+    override fun puedeVerPublicacion(publicacion: Publicacion, usuario: Usuario): Boolean {
+        val excluidos = publicacion.autor!!.listaDeExcluidos
+        return !excluidos.contains(usuario)
+    }
 }
