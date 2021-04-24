@@ -10,12 +10,12 @@ abstract class Publicacion {
 
     var privacidad: Privacidad? = null
 
-
     abstract fun espacioQueOcupa(): Int
 
     fun recibirMeGusta() {
         cantidadDeMeGusta += 1
     }
+
 
     fun cantidadDeMeGusta() = this.cantidadDeMeGusta
 

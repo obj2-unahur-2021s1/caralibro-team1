@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
-
+iuhohoh
 class UsuarioTest : DescribeSpec({
   describe("Caralibro") {
     val saludoCumpleanios = Texto("Felicidades Pepito, que los cumplas muy feliz")
@@ -102,6 +102,17 @@ class UsuarioTest : DescribeSpec({
           brenda.puedeVerLaPublicacion(fotoDeBebe).shouldBeFalse()
           patricio.puedeVerLaPublicacion(fotoDeBebe).shouldBeTrue()
         }
+          //Saber cual es el amigo más popular que tiene un usuario.
+          // Es decir, el amigo que tiene mas me gusta entre todas sus publicaciones.
+          describe("cual es el amigo más popular que tiene un usuario") {
+              patricio.elAmigoMasPular().shouldBe(juana)
+          }
+          //Saber si un usuario stalkea a otro. Lo cual ocurre si
+          // el stalker le dio me gusta a más del 90% de sus publicaciones.
+          describe("cual es el amigo más popular que tiene un usuario") {
+              patricio.esStalkerDe(cristian).shouldBeFalse()
+          }
+
       }
     }
   }
