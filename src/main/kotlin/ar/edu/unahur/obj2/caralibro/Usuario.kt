@@ -17,17 +17,17 @@ class Usuario {
   }
 
     //Esta funcion busca al amigo con mas me gusta en sus publicaciones
-  fun elAmigoMasPular() = amigos.sumBy { it.meGustasDeTodaslasPublicaciones()}
+  fun elAmigoMasPular() = amigos.maxByOrNull{ c->c.meGustasDeTodaslasPublicaciones()}
     //Esta funcion suma todas los me gusta de todas sos publicaciones
-  fun meGustasDeTodaslasPublicaciones()=publicaciones.sum({c->c.cantidadDeMeGusta()})
+  fun meGustasDeTodaslasPublicaciones()=publicaciones.sumBy{c->c.cantidadDeMeGusta()}
     //Saber si un usuario stalkea a otro. Lo cual ocurre si
     // el stalker le dio me gusta a más del 90% de sus publicaciones.
     //Esta funcion devuelve si la cantidad de megusta al usuario stalkeado es mayor o igual ala cantidad de publicaciones de stalkeado
   fun esStalkerDe(usuarioStalkeado: Usuario)= cantidadDeMegustaA(usuarioStalkeado)>=usuarioStalkeado.cantidadDePublicaciones()*0.9
     //Esta funcion devuelve la cantidad de publicaciones hechas
-  fun cantidadDePublicaciones() = publicaciones.size
+  fun cantidadDePublicaciones() = this.publicaciones.size
     //esta funcion devuelve la cantidad de me gustas hechos a tal usuario
-  fun cantidadDeMegustaA(usuario: Usuario)= publicacionesQueMeGustan.filter{c->c.autor(usuario)}.size
+  fun cantidadDeMegustaA(usuario: Usuario)= publicacionesQueMeGustan.count(){c->c.esDe()==usuario}
 
   fun puedoDarMeGusta(publicacion: Publicacion) = this.puedeVerLaPublicacion(publicacion)
 

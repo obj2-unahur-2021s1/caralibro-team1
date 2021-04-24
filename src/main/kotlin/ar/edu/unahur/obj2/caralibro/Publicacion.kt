@@ -15,7 +15,7 @@ abstract class Publicacion {
     fun recibirMeGusta() {
         cantidadDeMeGusta += 1
     }
-
+    fun esDe()=this.autor
 
     fun cantidadDeMeGusta() = this.cantidadDeMeGusta
 
