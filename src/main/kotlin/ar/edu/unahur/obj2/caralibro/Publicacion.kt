@@ -93,7 +93,7 @@ object SoloAmigos: Privacidad() {
 
 object ListaDePermitidos: Privacidad() {
     override fun puedeVerPublicacion(publicacion: Publicacion, usuario: Usuario): Boolean {
-        val permitidos = publicacion.autor!!.listaDePermitidos
+        val permitidos = publicacion.autor!!.mejoresAmigos()
         return permitidos.contains(usuario)
     }
 }
