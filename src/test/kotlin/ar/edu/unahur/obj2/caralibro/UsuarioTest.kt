@@ -15,20 +15,9 @@ class UsuarioTest : DescribeSpec({
         }
       }
 
-
       describe("de tipo texto") {
         it("ocupa tantos bytes como su longitud") {
           saludoCumpleanios.espacioQueOcupa().shouldBe(45)
-        }
-      }
-
-      describe("un video") {
-        it("ocupa tantos bytes como su longitud") {
-          val videoDeLaUniversidad= Video(3,HD720p)
-          videoDeLaUniversidad.espacioQueOcupa().shouldBe(9)
-          videoDeLaUniversidad.calidad = HD1080p
-          videoDeLaUniversidad.espacioQueOcupa().shouldBe(18)
-
         }
       }
     }
@@ -40,8 +29,6 @@ class UsuarioTest : DescribeSpec({
         juana.agregarPublicacion(saludoCumpleanios)
         juana.espacioDePublicaciones().shouldBe(550548)
       }
-
     }
   }
 })
-
