@@ -15,7 +15,7 @@ abstract class Publicacion {
     fun recibirMeGusta() {
         cantidadDeMeGusta += 1
     }
-    fun esDe()=this.autor
+    fun esDe() = this.autor
 
     fun cantidadDeMeGusta() = this.cantidadDeMeGusta
 
@@ -32,8 +32,7 @@ abstract class Publicacion {
 }
 
 
-class Foto(val alto: Int, val ancho: Int) : Publicacion()
-{
+class Foto(val alto: Int, val ancho: Int) : Publicacion() {
     var factorDeCompresion = 0.7
 
     override fun espacioQueOcupa() = ceil(alto * ancho * factorDeCompresion).toInt()
@@ -44,35 +43,28 @@ class Foto(val alto: Int, val ancho: Int) : Publicacion()
     }
 }
 
-class Texto(val contenido: String) : Publicacion()
-{
+class Texto(val contenido: String) : Publicacion() {
 
   override fun espacioQueOcupa() = contenido.length
-
 }
 
-class Video(val duracion:Int, var calidad:Calidad): Publicacion()
-{
+class Video(val duracion:Int, var calidad:Calidad): Publicacion() {
     override fun espacioQueOcupa(): Int = calidad.espacioQueOcupa(duracion)
 
     fun cambiarCalidad(calidadNueva: Calidad) {
         calidad = calidadNueva
     }
-
 }
 abstract class Calidad {
     abstract fun espacioQueOcupa(duracion:Int):Int
 }
-object HD720p: Calidad()
-{
+object HD720p: Calidad() {
     override fun espacioQueOcupa(duracion: Int) = duracion * 3
 }
-object HD1080p: Calidad()
-{
+object HD1080p: Calidad() {
     override fun espacioQueOcupa(duracion: Int) = (duracion * 3) * 2
 }
-object SD: Calidad()
-{
+object SD: Calidad() {
     override fun espacioQueOcupa(duracion: Int) = duracion
 }
 

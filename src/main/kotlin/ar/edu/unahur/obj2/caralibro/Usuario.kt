@@ -16,21 +16,7 @@ class Usuario {
     publicacion.asignarAutor(this)
   }
 
-    //Esta funcion busca al amigo con mas me gusta en sus publicaciones
-  fun elAmigoMasPular() = amigos.maxByOrNull{ c->c.meGustasDeTodaslasPublicaciones()}
-    //Esta funcion suma todas los me gusta de todas sos publicaciones
-  fun meGustasDeTodaslasPublicaciones()=publicaciones.sumBy{c->c.cantidadDeMeGusta()}
-    //Saber si un usuario stalkea a otro. Lo cual ocurre si
-    // el stalker le dio me gusta a más del 90% de sus publicaciones.
-    //Esta funcion devuelve si la cantidad de megusta al usuario stalkeado es mayor o igual ala cantidad de publicaciones de stalkeado
-  fun esStalkerDe(usuarioStalkeado: Usuario)= cantidadDeMegustaA(usuarioStalkeado)>=usuarioStalkeado.cantidadDePublicaciones()*0.9
-    //Esta funcion devuelve la cantidad de publicaciones hechas
-  fun cantidadDePublicaciones() = this.publicaciones.size
-    //esta funcion devuelve la cantidad de me gustas hechos a tal usuario
-  fun cantidadDeMegustaA(usuario: Usuario)= publicacionesQueMeGustan.count(){c->c.esDe()==usuario}
-
   fun puedoDarMeGusta(publicacion: Publicacion) = this.puedeVerLaPublicacion(publicacion)
-
 
   fun darMeGusta(publicacion: Publicacion) {
     if(publicacionesQueMeGustan.contains(publicacion)) {
@@ -59,6 +45,7 @@ class Usuario {
       listaDePermitidos.add(usuario)
     }
   }
+
   fun eliminarDeListaDePermitidos(usuario: Usuario) {
     if(!listaDePermitidos.contains(usuario)) {
       error("No está en la lista de permitidos")
@@ -67,6 +54,7 @@ class Usuario {
       listaDePermitidos.remove(usuario)
     }
   }
+
   fun agregarAListaDeExcluidos(usuario: Usuario) {
     if (listaDeExcluidos.contains(usuario)) {
       error("Ya está en lista de excluidos.")
@@ -85,5 +73,15 @@ class Usuario {
   fun cambiarPrivacidad(publicacion: Publicacion, privacidad: Privacidad) = publicacion.cambiarPrivacidad(privacidad)
 
   fun mejoresAmigos() = listaDePermitidos
+
+  fun elAmigoMasPular() = amigos.maxByOrNull{ c->c.meGustasDeTodaslasPublicaciones()}
+
+  fun meGustasDeTodaslasPublicaciones()=publicaciones.sumBy{c->c.cantidadDeMeGusta()}
+
+  fun esStalkerDe(usuarioStalkeado: Usuario)= cantidadDeMegustaA(usuarioStalkeado)>=usuarioStalkeado.cantidadDePublicaciones()*0.9
+
+  fun cantidadDePublicaciones() = this.publicaciones.size
+
+  fun cantidadDeMegustaA(usuario: Usuario)= publicacionesQueMeGustan.count(){c->c.esDe()==usuario}
 
 }
