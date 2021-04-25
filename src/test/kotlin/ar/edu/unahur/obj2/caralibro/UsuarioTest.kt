@@ -101,7 +101,6 @@ class UsuarioTest : DescribeSpec({
           brenda.puedeVerLaPublicacion(saludoCumpleanios).shouldBeFalse()
           patricio.puedeVerLaPublicacion(saludoCumpleanios).shouldBeTrue()
         }
-
       }
       describe("mejores amigos") {
         juana.mejoresAmigos().shouldBe(listOf(brenda, cristian))
@@ -109,18 +108,29 @@ class UsuarioTest : DescribeSpec({
         juana.mejoresAmigos().shouldBe(listOf(cristian))
 
       }
-        //Saber si un usuario stalkea a otro. Lo cual ocurre si
-        // el stalker le dio me gusta a más del 90% de sus publicaciones.
-
-        describe("cual es el amigo más popular que tiene un usuario") {
-            patricio.esStalkerDe(cristian).shouldBeFalse()
+      describe("cual es el stalker") {
+        patricio.esStalkerDe(cristian).shouldBeFalse()
       }
-        //Saber cual es el amigo más popular que tiene un usuario.
-        // Es decir, el amigo que tiene mas me gusta entre todas sus publicaciones.
-        describe("cual es el amigo más popular que tiene un usuario") {
-            patricio.elAmigoMasPular().shouldBe(juana)
-        }
+      describe("cual es el amigo más popular que tiene un usuario") {
+        patricio.agregarAmigo(cristian)
+        patricio.agregarAmigo(juana)
 
+        brenda.darMeGusta(fotoEnCuzco)
+        cristian.darMeGusta(saludoCumpleanios)
+        brenda.darMeGusta(saludoCumpleanios)
+        patricio.darMeGusta(saludoCumpleanios)
+        juana.darMeGusta(fotoDeBebe)
+        brenda.darMeGusta(fotoDeBebe)
+
+        patricio.elAmigoMasPular().shouldBe(juana)
+
+        cristian.agregarPublicacion(videoGracioso)
+        cristian.cambiarPrivacidad(videoGracioso, Publico)
+        juana.darMeGusta(videoGracioso)
+        patricio.darMeGusta(videoGracioso)
+        brenda.darMeGusta(videoGracioso)
+        patricio.elAmigoMasPular().shouldBe(cristian)
+        }
     }
   }
 })
